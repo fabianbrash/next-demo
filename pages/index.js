@@ -1,65 +1,42 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+
+/*
+** REF:https://scotch.io/tutorials/easily-deploy-a-fullstack-nextjs-app-with-vercel
+*/
+
+
+export default function Home({
+  title = "My awesome Next Demo App",
+  metaContent = "Generic SEO pitch",
+  copy = "I'm having writer's block."
+}) {
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+    <>
+    <Head>
+      <title>{title}</title>
+      <meta content={metaContent} />
+    </Head>
+    <div>
+      <h1>{title}</h1>
+      <p>{copy}</p>
+      <Link href="/hello-user-agent"><a>UserAgent</a></Link>
     </div>
-  )
+  </>
+  );
 }
+
+export const getStaticProps = async () => {
+
+  return {
+    props: {
+      title: "My Amazing Startup",
+      metaContent: "Amazing SEO poetry",
+      copy: "I'm in the business of making people smile. That's all I'm here for and to make some mulah!!",
+    },
+    revalidate: 1, //number of seconds to wait before revalidating
+  };
+};
